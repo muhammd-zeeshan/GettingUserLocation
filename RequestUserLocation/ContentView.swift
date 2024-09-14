@@ -8,14 +8,17 @@
 import SwiftUI
 
 struct ContentView: View {
+    
+    @ObservedObject var locationManager = LocationManager.shared
+    
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+        Group {
+            if locationManager.userLocation == nil {
+                LocationRequestView()
+            } else if let location = LocationManager.shared.userLocation{
+                Text("\(location.coordinate)")
+            }
         }
-        .padding()
     }
 }
 
